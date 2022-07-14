@@ -9,7 +9,7 @@ import { genres, Song } from '../../SongModel';
 // import {  Validate, ValidationGroup } from 'mui-validate';
 
 type Props = {
-    addSong: (newSong: Song) => Promise<void>
+    addSong: (newSong: Song) =>void
 }
 
 export default function AddSong({ addSong }: Props) {

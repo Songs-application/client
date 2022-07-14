@@ -8,9 +8,9 @@ import SearchIcon from '@mui/icons-material/Search';
 
 type PropsGet = {
     myList: Song[]
-    deleteSong: (songId: string) => Promise<void>
-    getByArtis: (artist: string) => Promise<void>
-    getSongs:()=>Promise<void>
+    deleteSong: (songId: string) =>void
+    getByArtis: (artist: string) => void
+    getSongs:()=>void
 }
 
 const SongsLandingPage = ({ myList, deleteSong, getByArtis ,getSongs}: PropsGet) => {

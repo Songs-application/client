@@ -1,60 +1,61 @@
 import axios from "axios-by-ts";
 import { Song } from "../SongModel";
+import { getListOfSongs, myAddSong, myDeleteSong, myEditSong } from "../store/actions";
 
-export const getAllSongs = async () => {
-    try {
-        const songs = await axios.get<Song[]>('http://localhost:8080/songs/all');
-        return songs.data;
-    }
-    catch (err) {
-        console.log(err);
-        return [];
-    }
+export const getAllSongsThunk = () => {
+    return async (dispatch: any) => {
+        try {
+            const songs = await axios.get<Song[]>('http://localhost:8080/songs/all');
+            dispatch(getListOfSongs(songs.data));
+        }
+        catch (err) {
+            return err;
+        }
 
-}
-
-export const getSongsByArtist= async (artist: string) => {
-    try{
-        const songs=await axios.get<Song[]>(`http://localhost:8080/songs/byArtist/${artist}`)
-        return songs.data;
-    }
-    catch (err) {
-        console.log(err);
-        return [];
     }
 }
 
-export const deleteById = async (idForDelete: string) => {
-    try {
-        const res = await axios.delete<string>(`http://localhost:8080/songs/${idForDelete}`);
-        return res.data;
+export const getSongsByArtistThunk = (artist: string) => {
+    return async (dispatch: any) => {
+        try {
+            const songs = await axios.get<Song[]>(`http://localhost:8080/songs/byArtist/${artist}`)
+            dispatch(getListOfSongs(songs.data));
+        }
+        catch (err) {
+            return err;
+        }
     }
-    catch (err) {
-        console.log(err)
-        return "";
-    }
-
 }
 
-export const updateById = async (editSong: Song) => {
-    try {
+export const deleteByIdThunk = (idForDelete: string) => {
+    return async (dispatch: any) => {
+        try {
+            const res = await axios.delete<string>(`http://localhost:8080/songs/${idForDelete}`);
+            dispatch(myDeleteSong(res.data));
+        }
+        catch (err) {
+            return err;
+        }
+    }
+}
+
+export const updateThunk = (editSong: Song) => {
+    return async (dispatch: any) => {
         const res = await axios({ url: `http://localhost:8080/songs/update`, method: 'PUT', data: editSong })
-        return res.data;
+        dispatch(myEditSong(res.data))
     }
-    catch (err) {
-        console.log(err)
-        return err;
-    };
 }
 
-export const addSong = async (newSong: Song) => {
-    try {
-        const song = await axios({ url: `http://localhost:8080/songs/add`, method: 'POST', data: newSong })
-        return song.data;
-    }
-    catch (err) {
-        console.log(err)
-        return err;
+export const addSongThunk = (newSong: Song) => {
+    return async (dispatch: any) => {
+        try {
+            const song = await axios({ url: `http://localhost:8080/songs/add`, method: 'POST', data: newSong });
+            dispatch(myAddSong(song.data));
+        }
+        catch (err) {
+            console.log(err)
+            return err;
+        }
     }
 }
 
@@ -65,7 +66,7 @@ export const getSongById = async (idOfSong: any) => {
     }
     catch (err) {
         console.log(err)
-        const s:Song={title:"",artist:"",length:0,price:0,genre:"",id:""};
+        const s: Song = { title: "", artist: "", length: 0, price: 0, genre: "", id: "" };
         return s;
     }
 }

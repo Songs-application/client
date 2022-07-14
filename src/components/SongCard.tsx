@@ -7,7 +7,7 @@ import EditButton from './EditButton';
 
 type Props={
   song:Song;
-  deleteSong:(songId: string) => Promise<void>
+  deleteSong:(songId: string) => void
 }
 
 export default function SongCard({ song,deleteSong }: Props) {

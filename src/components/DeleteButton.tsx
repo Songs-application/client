@@ -1,14 +1,14 @@
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from '@mui/material/Stack';
+import { useNavigate } from 'react-router-dom';
 
 interface deleteBut {
     idForDelete: string
-    deleteSong:(songId:string) => Promise<void>
+    deleteSong:(songId:string) =>void
 }
 
 const DeleteButton = ({ idForDelete ,deleteSong}:deleteBut) => {
-    
     async function handleClick() {
       deleteSong(idForDelete);
     }  

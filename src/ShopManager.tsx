@@ -1,12 +1,13 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Routes, Route } from "react-router-dom";
-import { addSong, deleteById, getAllSongs, getSongById, getSongsByArtist, updateById } from "./api/songs.api";
+import { addSongThunk, deleteByIdThunk, getAllSongsThunk, getSongById, getSongsByArtistThunk, updateThunk } from "./api/songs.api";
 import { Song } from "./SongModel";
 import { getListOfSongs, myAddSong, myDeleteSong, myEditSong } from "./store/actions";
 import AddSong from "./pages/addSong/AddSong";
 import EditSong from "./pages/editSong/EditSong";
 import SongsLandingPage from "./pages/songsLandingPage/SongsLandingPage";
+import type { } from 'redux-thunk/extend-redux'
 
 const ShopManager = () => {
     const myList: Song[] = useSelector((state: any) => state.reducerSong.listSong);
@@ -16,36 +17,34 @@ const ShopManager = () => {
         getSongsFromApiAndSendToRedux();
     }, [])
 
-    const getSongsFromApiAndSendToRedux = async () => {
-        const allSongs: Song[] = await getAllSongs();
-        dis(getListOfSongs(allSongs));
+    const getSongsFromApiAndSendToRedux = () => {
+        // const allSongs: Song[] = await getAllSongs();
+        dis(getAllSongsThunk());
     }
 
-    const getSongsByArtistFromApi = async (artist: string) => {
-        const allSongs: Song[] = await getSongsByArtist(artist);
-        dis(getListOfSongs(allSongs));
+    const getSongsByArtistFromApi = (artist: string) => {
+        // const allSongs: Song[] = await getSongsByArtist(artist);
+        dis(getSongsByArtistThunk(artist));
     }
 
-    const addSongToServer = async (newSong: Song) => {
-        const song: Song = await addSong(newSong)
-        dis(myAddSong(song));
+    const addSongToServer =(newSong: Song) => {
+        // const song: Song = await addSong(newSong)
+        dis(addSongThunk(newSong));
     }
 
     const editSong = async (songForEdit: Song) => {
-        const song: Song = await updateById(songForEdit);
-        dis(myEditSong(song));
+        // const song: Song = await updateById(songForEdit);
+        dis(updateThunk(songForEdit));
     }
 
-    const deleteSong = async (songId: string) => {
-        await deleteById(songId);
-        dis(myDeleteSong(songId));
+    const deleteSong =(songId: string) => {
+        // await deleteById(songId);
+        dis(deleteByIdThunk(songId));
     }
 
     const getSongByIdFromApi = async (songId: any) => {
         return await getSongById(songId);
     }
-
-
 
 
     return (
