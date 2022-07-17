@@ -18,27 +18,22 @@ const ShopManager = () => {
     }, [])
 
     const getSongsFromApiAndSendToRedux = () => {
-        // const allSongs: Song[] = await getAllSongs();
         dis(getAllSongsThunk());
     }
 
     const getSongsByArtistFromApi = (artist: string) => {
-        // const allSongs: Song[] = await getSongsByArtist(artist);
         dis(getSongsByArtistThunk(artist));
     }
 
     const addSongToServer =(newSong: Song) => {
-        // const song: Song = await addSong(newSong)
         dis(addSongThunk(newSong));
     }
 
     const editSong = async (songForEdit: Song) => {
-        // const song: Song = await updateById(songForEdit);
         dis(updateThunk(songForEdit));
     }
 
     const deleteSong =(songId: string) => {
-        // await deleteById(songId);
         dis(deleteByIdThunk(songId));
     }
 

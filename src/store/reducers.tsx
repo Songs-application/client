@@ -17,7 +17,6 @@ const initialization: songArray = { listSong: [] }
 export const reducerSong = (state: songArray = initialization, action: Action) => {
     switch (action.type) {
         case "ADD_SONG":
-            // action.payload.id = state.listSong[state.listSong.length - 1].id + 1;
             return {
                 ...state,
                 listSong: [...state.listSong, action.payload]
